@@ -10,7 +10,7 @@ const Footer = () => {
           <div>
             <Link to="/" className="flex items-center gap-2 mb-4">
               <Leaf className="w-8 h-8" />
-              <span className="text-xl font-semibold">EcoPackaging</span>
+              <span className="text-xl font-semibold">M3 Designs </span>
             </Link>
             <p className="text-primary-foreground/80 text-sm">
               Premium eco-friendly packaging solutions for a sustainable future.
@@ -77,15 +77,18 @@ const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2 text-primary-foreground/80">
                 <Mail className="w-4 h-4" />
-                <span>info@ecopackaging.com</span>
+                <span>info@m3designs.com</span>
               </li>
               <li className="flex items-center gap-2 text-primary-foreground/80">
                 <Phone className="w-4 h-4" />
-                <span>+91 1234567890</span>
+                <span>+1 - 343-989-7877
+</span>
               </li>
               <li className="flex items-center gap-2 text-primary-foreground/80">
                 <MapPin className="w-4 h-4" />
-                <span>Mumbai, India</span>
+                <span>1209 Carfa Cresent 
+Kingston ON K7P 0N2
+</span>
               </li>
             </ul>
           </div>

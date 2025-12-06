@@ -95,7 +95,7 @@ Kingston ON K7P 0N2
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-sm text-primary-foreground/80">
-          <p>&copy; 2024 EcoPackaging. All rights reserved.</p>
+          <p>&copy; 2024 M3 Designs. All rights reserved.</p>
         </div>
       </div>
     </footer>

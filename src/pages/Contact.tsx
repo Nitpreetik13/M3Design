@@ -8,30 +8,77 @@ import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { toast } from "sonner";
 
+// 1. Define FormData type
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
+const SHEETDB_CONTACT_API = "https://sheetdb.io/api/v1/c5r9rv11h2j5x";
+
 const Contact = () => {
-  const [formData, setFormData] = useState({
+  // 2. Typed state for form data
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     phone: "",
     message: "",
   });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success("Message sent successfully!", {
-      description: "We'll get back to you within 24 hours.",
-    });
-    setFormData({ name: "", email: "", phone: "", message: "" });
-  };
-
+  // 3. Change handler
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // 4. Submit handler (async)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setSubmitting(true);
+
+    // Prepare payload for SheetDB
+    const payload = {
+      data: [
+        {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+        }
+      ]
+    };
+
+    try {
+      const response = await fetch(SHEETDB_CONTACT_API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        toast.success("Message sent successfully!", {
+          description: "We'll get back to you within 24 hours.",
+        });
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        toast.error("Failed to send message. Try again!");
+      }
+    } catch (error) {
+      toast.error("Network error. Try again!");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // 5. Component JSX
   return (
     <div className="min-h-screen">
       <Navigation />
-      
       <main className="pt-16">
         <Hero
           title="Get in Touch"
@@ -45,7 +92,7 @@ const Contact = () => {
               {/* Contact Form */}
               <div className="glass-card rounded-2xl p-8 animate-slide-left">
                 <h2 className="text-2xl font-bold mb-6 text-foreground">Send us a Message</h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" autoComplete="off">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                       Name *
@@ -61,7 +108,6 @@ const Contact = () => {
                       className="focus:ring-2 focus:ring-primary"
                     />
                   </div>
-                  
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
                       Email *
@@ -77,7 +123,6 @@ const Contact = () => {
                       className="focus:ring-2 focus:ring-primary"
                     />
                   </div>
-                  
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
                       Phone
@@ -92,7 +137,6 @@ const Contact = () => {
                       className="focus:ring-2 focus:ring-primary"
                     />
                   </div>
-                  
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
                       Message *
@@ -108,15 +152,13 @@ const Contact = () => {
                       className="focus:ring-2 focus:ring-primary resize-none"
                     />
                   </div>
-                  
-                  <Button type="submit" className="w-full bg-primary hover:bg-primary/90">
-                    Send Message
-                    <Send className="ml-2 w-4 h-4" />
+                  <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={submitting}>
+                    {submitting ? "Sending..." : <>Send Message <Send className="ml-2 w-4 h-4" /></>}
                   </Button>
                 </form>
               </div>
 
-              {/* Contact Info */}
+              {/* Contact Info (same as your current) */}
               <div className="space-y-8 animate-slide-right">
                 <div className="glass-card rounded-2xl p-8">
                   <h2 className="text-2xl font-bold mb-6 text-foreground">Contact Information</h2>
@@ -127,22 +169,18 @@ const Contact = () => {
                       </div>
                       <div>
                         <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                        <p className="text-muted-foreground">info@ecopackaging.com</p>
-                        <p className="text-muted-foreground">support@ecopackaging.com</p>
+                        <p className="text-muted-foreground">info@m3designs.com</p>
                       </div>
                     </div>
-
                     <div className="flex items-start gap-4">
                       <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 text-primary flex-shrink-0">
                         <Phone className="w-6 h-6" />
                       </div>
                       <div>
                         <h3 className="font-semibold text-foreground mb-1">Phone</h3>
-                        <p className="text-muted-foreground">+91 1234567890</p>
-                        <p className="text-muted-foreground">+91 0987654321</p>
+                        <p className="text-muted-foreground">+1-343-989-7877</p>
                       </div>
                     </div>
-
                     <div className="flex items-start gap-4">
                       <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 text-primary flex-shrink-0">
                         <MapPin className="w-6 h-6" />
@@ -150,9 +188,9 @@ const Contact = () => {
                       <div>
                         <h3 className="font-semibold text-foreground mb-1">Address</h3>
                         <p className="text-muted-foreground">
-                          123 Eco Street, Green District<br />
-                          Mumbai, Maharashtra 400001<br />
-                          India
+                          1209 Carfa Cresent <br />
+                          Kingston ON K7P 0N2<br />
+                          Canada
                         </p>
                       </div>
                     </div>
@@ -182,7 +220,6 @@ const Contact = () => {
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   );

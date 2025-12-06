@@ -1,48 +1,59 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import { CheckCircle2, Users, Globe, Award } from "lucide-react";
+import { PackageCheck, Truck, Landmark, Lightbulb } from "lucide-react";
 import aboutImage from "@/assets/about-team.jpg";
 
 const About = () => {
   const milestones = [
-    { year: "2018", event: "Company Founded", description: "Started our eco-friendly journey" },
-    { year: "2020", event: "1M Products Sold", description: "Reached our first million milestone" },
-    { year: "2022", event: "Pan India Expansion", description: "Expanded to serve all major cities" },
-    { year: "2024", event: "Sustainability Award", description: "Recognized for environmental impact" },
+    {
+      year: "2024",
+      event: "Idea Born",
+      description: "The concept of a next‑generation restaurant supply chain model was envisioned",
+    },
+    {
+      year: "2024",
+      event: "Company Launched",
+      description: "M3 Design officially launched as a dedicated supply‑chain partner for restaurants",
+    },
+    {
+      year: "2025",
+      event: "First Vendor Partnerships",
+      description: "We began forming our first verified vendor and packaging supplier partnerships",
+    },
   ];
 
   const values = [
     {
-      icon: Globe,
-      title: "Environmental Responsibility",
-      description: "Committed to reducing plastic waste and promoting sustainable alternatives",
+      icon: PackageCheck,
+      title: "Reliable Packaging",
+      description: "Ensuring restaurants never run out of essential boxes, cups, and eco-friendly supplies",
     },
     {
-      icon: Users,
-      title: "Customer First",
-      description: "Dedicated to providing exceptional service and quality products",
+      icon: Truck,
+      title: "Smooth Logistics",
+      description: "Fast, predictable delivery with real-time tracking and zero guesswork",
     },
     {
-      icon: Award,
-      title: "Quality Assurance",
-      description: "Rigorous testing ensures every product meets our high standards",
+      icon: Landmark,
+      title: "Vendor Transparency",
+      description: "Fair pricing, verified vendors, and complete clarity at every step",
     },
     {
-      icon: CheckCircle2,
-      title: "Innovation",
-      description: "Constantly developing new eco-friendly packaging solutions",
+      icon: Lightbulb,
+      title: "Smart Technology",
+      description: "Leveraging automation to help restaurants manage inventory effortlessly",
     },
   ];
 
   return (
     <div className="min-h-screen">
       <Navigation />
-      
+
       <main className="pt-16">
         <Hero
-          title="About EcoPackaging"
-          subtitle="Leading the change towards sustainable packaging solutions"
+          title="About M3 Design"
+          subtitle="Revolutionizing the way restaurants manage and receive their packaging supplies"
           image={aboutImage}
         />
 
@@ -52,10 +63,9 @@ const About = () => {
             <div className="max-w-3xl mx-auto text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">Our Story</h2>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Founded in 2018, EcoPackaging started with a simple mission: to provide businesses 
-                with high-quality, sustainable packaging alternatives. Today, we're proud to be one 
-                of India's leading suppliers of eco-friendly packaging solutions, serving thousands 
-                of businesses across the country.
+                M3 Design was born with one clear mission: to eliminate the chaos behind restaurant packaging logistics. 
+                From boxes to cups to eco-friendly containers, we ensure restaurants get exactly what they need—on time, 
+                every time. No more last-minute shortages. No more unreliable vendors. Just smooth operations.
               </p>
             </div>
 
@@ -94,7 +104,7 @@ const About = () => {
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Our Values</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                The principles that guide everything we do
+                The principles that drive our mission to build the most reliable restaurant supply chain platform
               </p>
             </div>
 
@@ -119,9 +129,9 @@ const About = () => {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Our Process</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">How We Operate</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                From sourcing to delivery, we ensure quality at every step
+                Our tech-driven process ensures every restaurant gets the right packaging at the right time
               </p>
             </div>
 
@@ -129,18 +139,18 @@ const About = () => {
               {[
                 {
                   step: "01",
-                  title: "Source",
-                  description: "We carefully source sustainable materials from certified suppliers",
+                  title: "Forecast",
+                  description: "Smart predictions ensure restaurants never overstock or run out",
                 },
                 {
                   step: "02",
-                  title: "Manufacture",
-                  description: "State-of-the-art facilities ensure consistent quality production",
+                  title: "Source & Verify",
+                  description: "We work with trusted suppliers to maintain consistent quality",
                 },
                 {
                   step: "03",
                   title: "Deliver",
-                  description: "Fast and reliable delivery to your doorstep across India",
+                  description: "Fast, reliable delivery with seamless coordination and tracking",
                 },
               ].map((process, index) => (
                 <div

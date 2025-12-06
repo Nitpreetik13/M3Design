@@ -16,7 +16,7 @@ interface FormData {
   message: string;
 }
 
-const SHEETDB_CONTACT_API = "https://sheetdb.io/api/v1/c5r9rv11h2j5x";
+const SHEETDB_CONTACT_API = "https://sheetdb.io/api/v1/gj3kq5u7gf1ck";
 
 const Contact = () => {
   // 2. Typed state for form data

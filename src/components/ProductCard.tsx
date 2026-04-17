@@ -1,5 +1,16 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { toast } from "sonner";
 
 interface ProductCardProps {
@@ -14,18 +25,30 @@ interface ProductCardProps {
 const SHEETDB_CONTACT_API = "https://sheetdb.io/api/v1/gj3kq5u7gf1ck";
 
 const ProductCard = ({ name, image, description, price, inStock = true, category }: ProductCardProps) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [sendingQuote, setSendingQuote] = useState(false);
+  const [quoteForm, setQuoteForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
 
-  const handleRequestQuote = async () => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setQuoteForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleRequestQuote = async (e: React.FormEvent) => {
+    e.preventDefault();
     setSendingQuote(true);
 
     const payload = {
       data: [
         {
-          name: "Website Product Inquiry",
-          email: "quote-request@website.local",
-          phone: "N/A",
-          message: `Quote requested for product: ${name} | Category: ${category || "N/A"} | In stock: ${inStock ? "Yes" : "No"}`,
+          name: quoteForm.name,
+          email: quoteForm.email,
+          phone: quoteForm.phone || "N/A",
+          message: `Product Inquiry\nProduct: ${name}\nCategory: ${category || "N/A"}\nIn Stock: ${inStock ? "Yes" : "No"}\nClient Message: ${quoteForm.message || "N/A"}`,
         },
       ],
     };
@@ -46,6 +69,8 @@ const ProductCard = ({ name, image, description, price, inStock = true, category
       toast.success(`Quote request sent for ${name}!`, {
         description: "Your team can now track this product inquiry in the contact sheet.",
       });
+      setQuoteForm({ name: "", email: "", phone: "", message: "" });
+      setIsDialogOpen(false);
     } catch {
       toast.error("Failed to send quote request. Try again.");
     } finally {
@@ -76,13 +101,59 @@ const ProductCard = ({ name, image, description, price, inStock = true, category
         {price && (
           <p className="text-primary font-semibold mb-4">{price}</p>
         )}
-        <Button
-          onClick={handleRequestQuote}
-          disabled={sendingQuote}
-          className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50"
-        >
-          {sendingQuote ? "Sending..." : "Request Quote"}
-        </Button>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button className="w-full bg-primary hover:bg-primary/90">
+              Request Quote
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Request Quote</DialogTitle>
+              <DialogDescription>
+                Share your details and we will contact you for {name}.
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleRequestQuote} className="space-y-4">
+              <Input
+                name="name"
+                type="text"
+                placeholder="Your name"
+                required
+                value={quoteForm.name}
+                onChange={handleChange}
+              />
+              <Input
+                name="email"
+                type="email"
+                placeholder="your@email.com"
+                required
+                value={quoteForm.email}
+                onChange={handleChange}
+              />
+              <Input
+                name="phone"
+                type="tel"
+                placeholder="+1 613 555 0123"
+                value={quoteForm.phone}
+                onChange={handleChange}
+              />
+              <Textarea
+                name="message"
+                placeholder={`Tell us your quantity/specs for ${name}`}
+                rows={4}
+                required
+                value={quoteForm.message}
+                onChange={handleChange}
+              />
+              <DialogFooter>
+                <Button type="submit" disabled={sendingQuote} className="w-full sm:w-auto">
+                  {sendingQuote ? "Sending..." : "Send Request"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

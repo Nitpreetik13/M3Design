@@ -48,7 +48,14 @@ const ProductCard = ({ name, image, description, price, inStock = true, category
           name: quoteForm.name,
           email: quoteForm.email,
           phone: quoteForm.phone || "N/A",
-          message: `Product Inquiry\nProduct: ${name}\nCategory: ${category || "N/A"}\nIn Stock: ${inStock ? "Yes" : "No"}\nClient Message: ${quoteForm.message || "N/A"}`,
+          message: `Product Inquiry
+Client Name: ${quoteForm.name}
+Client Email: ${quoteForm.email}
+Client Phone: ${quoteForm.phone || "N/A"}
+Product: ${name}
+Category: ${category || "N/A"}
+In Stock: ${inStock ? "Yes" : "No"}
+Client Message: ${quoteForm.message || "N/A"}`,
         },
       ],
     };

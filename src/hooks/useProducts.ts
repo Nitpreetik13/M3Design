@@ -9,9 +9,15 @@ export interface Product {
   inStock?: boolean;
 }
 
-// IMPORTANT: Replace the API URL below with your actual SheetDB API URL
-// Your SheetDB URL should look like: https://sheetdb.io/api/v1/YOUR_API_ID
-const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxJuPvKS6mLC_md6wTtUDqIx1-Lbowg-61A8A0QFPaDeaINIeneTTxE5bzY01Rn1CVh5Q/exec";
+type ProductsApiResponse =
+  | {
+      success: true;
+      data: Record<string, unknown>[];
+    }
+  | {
+      success: false;
+      error: string;
+    };
 
 const useProducts = (category?: string) => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -23,15 +29,17 @@ const useProducts = (category?: string) => {
       try {
         setLoading(true);
         
-        // Fetch products from Google Sheet via SheetDB
-        const response = await fetch(SHEET_API_URL);
+        const response = await fetch("/api/products");
         
         if (!response.ok) {
           throw new Error("Failed to fetch products");
         }
         
-        const data = await response.json();
-        const rows = Array.isArray(data) ? data : [];
+        const result = (await response.json()) as ProductsApiResponse;
+        if (!result.success) {
+          throw new Error(result.error || "Failed to fetch products");
+        }
+        const rows = Array.isArray(result.data) ? result.data : [];
         
         // Map the sheet data to our Product interface
         const allProducts: Product[] = rows.map((item: Record<string, unknown>) => ({

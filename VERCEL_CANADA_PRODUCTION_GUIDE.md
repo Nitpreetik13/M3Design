@@ -1,6 +1,6 @@
 # Vercel + Canada Website Production Guide
 
-This project now uses a Vercel serverless API for contact submissions to avoid browser CORS issues with Google Apps Script.
+This project now uses Vercel serverless APIs for both contact submissions and product fetching to avoid browser CORS issues with Google Apps Script.
 
 ## What Was Implemented
 
@@ -11,19 +11,26 @@ This project now uses a Vercel serverless API for contact submissions to avoid b
 - Returns JSON success/error responses
 - Uses env var first: `GOOGLE_APPS_SCRIPT_CONTACT_URL`
 
-2. Updated `src/pages/Contact.tsx`
+2. Added `api/products.ts`
+- `GET` only (returns `405` for other methods)
+- Fetches product rows from your existing Google Apps Script URL
+- Returns typed JSON `{ success, data }`
+- Uses env var first: `GOOGLE_APPS_SCRIPT_PRODUCTS_URL` (falls back to contact URL)
+
+3. Updated `src/pages/Contact.tsx`
 - Frontend now submits to `/api/contact`
 - Removed `mode: "no-cors"`
 - Uses async/await with proper response/error handling
 
-3. Strengthened TypeScript mapping in `src/hooks/useProducts.ts`
-- Safe parsing from sheet response
+4. Updated `src/hooks/useProducts.ts`
+- Frontend now loads products from `/api/products`
+- Safe typed parsing for server response
 - Fixed stock field mapping to `inStock` for UI compatibility
 
-4. Production image-path fixes in `src/pages/Products.tsx`
+5. Production image-path fixes in `src/pages/Products.tsx`
 - Replaced string paths like `"src/assets/...jpg"` with proper asset imports
 
-5. Canada-focused text and consistency updates
+6. Canada-focused text and consistency updates
 - `src/pages/Index.tsx`: changed delivery text to Canada + brand heading
 - `src/pages/Contact.tsx`: fixed phone placeholder and `Crescent` spelling
 - `src/components/Footer.tsx`: fixed phone/address formatting + dynamic copyright year
@@ -34,15 +41,16 @@ This project now uses a Vercel serverless API for contact submissions to avoid b
 Add this in Vercel Project Settings -> Environment Variables:
 
 - `GOOGLE_APPS_SCRIPT_CONTACT_URL` = your Apps Script endpoint URL
+- `GOOGLE_APPS_SCRIPT_PRODUCTS_URL` = your product Apps Script endpoint URL (optional if same as contact)
 
 Then redeploy.
 
 ## Local Development Note
 
-`/api/contact` is a Vercel function route.  
+`/api/contact` and `/api/products` are Vercel function routes.  
 For local API testing, run with `vercel dev` (instead of only `vite`), or deploy and test on preview URL.
 
-If you run only `vite` and saw `POST /api/contact 404`, this project now includes a Vite dev proxy in `vite.config.ts` so `/api/contact` still works locally.
+If you run only `vite` and saw `/api/* 404`, this project now includes Vite dev proxies in `vite.config.ts` so `/api/contact` and `/api/products` still work locally.
 
 ## Photo Update Plan (Wallpapers / Signage / Poster)
 
@@ -62,6 +70,6 @@ Recommended photo direction:
 
 ## Remaining Recommended Changes (Next Step)
 
-1. Add a serverless `GET` endpoint for products (e.g. `api/products.ts`) and update `useProducts` to call `/api/products` for full CORS-proof architecture.
-2. Add lightweight form validation (email + message length) server-side in `api/contact.ts`.
-3. Add spam protection (`hCaptcha`/`Turnstile`) before production marketing campaigns.
+1. Add stronger server-side validation rules (email format + message length + sanitization).
+2. Add spam protection (`hCaptcha`/`Turnstile`) before production marketing campaigns.
+3. Optionally split contact/products into separate Apps Script URLs if you want independent scaling.

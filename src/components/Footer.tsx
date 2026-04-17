@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Leaf } from "lucide-react";
 
 const Footer = () => {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -81,21 +83,22 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2 text-primary-foreground/80">
                 <Phone className="w-4 h-4" />
-                <span>+1 - 343-989-7877
-</span>
+                <span>+1 343-989-7877</span>
               </li>
               <li className="flex items-center gap-2 text-primary-foreground/80">
                 <MapPin className="w-4 h-4" />
-                <span>1209 Carfa Cresent 
-Kingston ON K7P 0N2
-</span>
+                <span>
+                  1209 Carfa Crescent
+                  <br />
+                  Kingston ON K7P 0N2, Canada
+                </span>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-sm text-primary-foreground/80">
-          <p>&copy; 2024 M3 Designs. All rights reserved.</p>
+          <p>&copy; {year} M3 Designs. All rights reserved.</p>
         </div>
       </div>
     </footer>

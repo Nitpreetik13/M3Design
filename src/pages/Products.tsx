@@ -2,6 +2,13 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import CategoryCard from "@/components/CategoryCard";
+import bagasseImg from "@/assets/category-bagasse.jpg";
+import plasticImg from "@/assets/category-plastic.jpg";
+import woodenImg from "@/assets/category-wooden.jpg";
+import paperImg from "@/assets/category-paper.jpg";
+import signageImg from "@/assets/category-signage.jpg";
+import posterImg from "@/assets/category-poster.jpg";
+import wallpapersImg from "@/assets/category-wallpapers.jpg";
 
 const Products = () => {
   const categories = [
@@ -9,43 +16,43 @@ const Products = () => {
       name: "Bagasse",
       slug: "bagasse",
       description: "100% biodegradable sugarcane products - plates, bowls, and containers",
-      image: "src/assets/category-bagasse.jpg",
+      image: bagasseImg,
     },
     {
       name: "Plastic",
       slug: "plastic",
       description: "Durable recyclable plastic containers and packaging solutions",
-      image: "src/assets/category-plastic.jpg",
+      image: plasticImg,
     },
     {
       name: "Wooden",
       slug: "wooden",
       description: "Natural wooden cutlery, stirrers, and eco-friendly accessories",
-      image: "src/assets/category-wooden.jpg",
+      image: woodenImg,
     },
     {
       name: "Paper",
       slug: "paper",
       description: "Eco-friendly paper bags, boxes, and sustainable packaging",
-      image: "src/assets/category-paper.jpg",
+      image: paperImg,
     },
     {
       name: "Signage",
       slug: "signage",
       description: "Custom printed eco-friendly signage for businesses and events",
-      image: "src/assets/category-signage.jpg",
+      image: signageImg,
     },
     {
       name: "Poster",
       slug: "poster",
       description: "High-quality eco posters for advertising and decoration",
-      image: "src/assets/category-poster.jpg",
+      image: posterImg,
     },
     {
       name: "Wallpapers",
       slug: "wallpapers",
       description: "Sustainable wallpaper solutions for modern spaces",
-      image: "src/assets/category-wallpapers.jpg",
+      image: wallpapersImg,
     },
   ];
 

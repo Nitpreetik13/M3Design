@@ -6,6 +6,12 @@ import { CheckCircle2, Leaf, Shield, Droplets } from "lucide-react";
 import useProducts from "@/hooks/useProducts";
 import { Skeleton } from "@/components/ui/skeleton";
 import bagasseImage from "@/assets/bagasse-products.jpg";
+import plasticImage from "@/assets/category-plastic.jpg";
+import woodenImage from "@/assets/category-wooden.jpg";
+import paperImage from "@/assets/category-paper.jpg";
+import signageImage from "@/assets/category-signage.jpg";
+import posterImage from "@/assets/category-poster.jpg";
+import wallpapersImage from "@/assets/category-wallpapers.jpg";
 
 const ProductCategory = () => {
   const { category } = useParams<{ category: string }>();
@@ -22,37 +28,37 @@ const ProductCategory = () => {
       title: "Plastic Solutions",
       description: "Durable and recyclable plastic packaging for various applications",
       features: ["Durable", "Recyclable", "Food Safe", "Leak-proof"],
-      image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1920&h=600",
+      image: plasticImage,
     },
     wooden: {
       title: "Wooden Products",
       description: "Natural wooden cutlery and accessories for an eco-friendly dining experience",
       features: ["100% Natural", "Biodegradable", "Sturdy", "Chemical-free"],
-      image: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=1920&h=600",
+      image: woodenImage,
     },
     paper: {
       title: "Paper Packaging",
       description: "Recyclable paper-based packaging solutions for sustainable businesses",
       features: ["Recyclable", "Customizable", "Eco-friendly", "Cost-effective"],
-      image: "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=1920&h=600",
+      image: paperImage,
     },
     signage: {
       title: "Eco Signage",
       description: "Custom printed signage on sustainable materials",
       features: ["Custom Printing", "Weather Resistant", "Eco Materials", "Vibrant Colors"],
-      image: "https://images.unsplash.com/photo-1599420186946-7b6fb4e297f0?w=1920&h=600",
+      image: signageImage,
     },
     poster: {
       title: "Eco Posters",
       description: "High-quality poster printing on recycled and sustainable paper",
       features: ["High Resolution", "Eco Paper", "Custom Sizes", "Fast Printing"],
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&h=600",
+      image: posterImage,
     },
     wallpapers: {
       title: "Sustainable Wallpapers",
       description: "Eco-friendly wallpapers for modern, sustainable interior design",
       features: ["Non-toxic", "Sustainable", "Easy Install", "Various Designs"],
-      image: "https://images.unsplash.com/photo-1616628188859-7a11abb6fcc9?w=1920&h=600",
+      image: wallpapersImage,
     },
   };
 
@@ -60,7 +66,7 @@ const ProductCategory = () => {
     title: "Products",
     description: "Eco-friendly products",
     features: [],
-    image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1920&h=600",
+    image: wallpapersImage,
   };
 
   const featureIcons = [CheckCircle2, Leaf, Shield, Droplets];

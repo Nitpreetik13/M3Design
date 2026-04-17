@@ -16,8 +16,6 @@ interface FormData {
   message: string;
 }
 
-const SHEETDB_CONTACT_API = "https://sheetdb.io/api/v1/gj3kq5u7gf1ck";
-
 const Contact = () => {
   // 2. Typed state for form data
   const [formData, setFormData] = useState<FormData>({
@@ -39,7 +37,7 @@ const Contact = () => {
 
     setSubmitting(true);
 
-    // Prepare payload for SheetDB
+    // Payload shape expected by the existing Google Apps Script.
     const payload = {
       data: [
         {
@@ -52,7 +50,7 @@ const Contact = () => {
     };
 
     try {
-      const response = await fetch(SHEETDB_CONTACT_API, {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -60,16 +58,21 @@ const Contact = () => {
         body: JSON.stringify(payload)
       });
 
-      if (response.ok) {
-        toast.success("Message sent successfully!", {
-          description: "We'll get back to you within 24 hours.",
-        });
-        setFormData({ name: "", email: "", phone: "", message: "" });
-      } else {
-        toast.error("Failed to send message. Try again!");
+      const result: { success?: boolean; error?: string } = await response
+        .json()
+        .catch(() => ({}));
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || "Failed to send message. Try again!");
       }
+
+      toast.success("Message sent successfully!", {
+        description: "We'll get back to you within 24 hours.",
+      });
+      setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
-      toast.error("Network error. Try again!");
+      const message = error instanceof Error ? error.message : "Network error. Try again!";
+      toast.error(message);
     } finally {
       setSubmitting(false);
     }
@@ -133,7 +136,7 @@ const Contact = () => {
                       type="tel"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="+91 1234567890"
+                      placeholder="+1 613 555 0123"
                       className="focus:ring-2 focus:ring-primary"
                     />
                   </div>
@@ -188,7 +191,7 @@ const Contact = () => {
                       <div>
                         <h3 className="font-semibold text-foreground mb-1">Address</h3>
                         <p className="text-muted-foreground">
-                          1209 Carfa Cresent <br />
+                          1209 Carfa Crescent <br />
                           Kingston ON K7P 0N2<br />
                           Canada
                         </p>

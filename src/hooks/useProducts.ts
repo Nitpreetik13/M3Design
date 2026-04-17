@@ -6,12 +6,12 @@ export interface Product {
   image: string;
   description: string;
   category?: string;
-  in_stock?: boolean;
+  inStock?: boolean;
 }
 
 // IMPORTANT: Replace the API URL below with your actual SheetDB API URL
 // Your SheetDB URL should look like: https://sheetdb.io/api/v1/YOUR_API_ID
-const SHEET_API_URL = "https://sheetdb.io/api/v1/nls9a6jqmvg5j";
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxJuPvKS6mLC_md6wTtUDqIx1-Lbowg-61A8A0QFPaDeaINIeneTTxE5bzY01Rn1CVh5Q/exec";
 
 const useProducts = (category?: string) => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -31,15 +31,16 @@ const useProducts = (category?: string) => {
         }
         
         const data = await response.json();
+        const rows = Array.isArray(data) ? data : [];
         
         // Map the sheet data to our Product interface
-        const allProducts: Product[] = data.map((item: any) => ({
-          name: item.name || "",
-          price: item.price || "",
-          image: item.image || "",
-          description: item.description || "",
-          category: item.category || "",
-          in_stock: item.in_stock === "true" || item.in_stock === true,
+        const allProducts: Product[] = rows.map((item: Record<string, unknown>) => ({
+          name: typeof item.name === "string" ? item.name : "",
+          price: typeof item.price === "string" ? item.price : "",
+          image: typeof item.image === "string" ? item.image : "",
+          description: typeof item.description === "string" ? item.description : "",
+          category: typeof item.category === "string" ? item.category : "",
+          inStock: item.in_stock === "true" || item.in_stock === true,
         }));
         
         // Filter by category if provided

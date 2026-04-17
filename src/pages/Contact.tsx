@@ -16,6 +16,8 @@ interface FormData {
   message: string;
 }
 
+const SHEETDB_CONTACT_API = "https://sheetdb.io/api/v1/gj3kq5u7gf1ck";
+
 const Contact = () => {
   // 2. Typed state for form data
   const [formData, setFormData] = useState<FormData>({
@@ -37,7 +39,7 @@ const Contact = () => {
 
     setSubmitting(true);
 
-    // Payload shape expected by the existing Google Apps Script.
+    // Prepare payload for SheetDB
     const payload = {
       data: [
         {
@@ -50,7 +52,7 @@ const Contact = () => {
     };
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(SHEETDB_CONTACT_API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -58,21 +60,16 @@ const Contact = () => {
         body: JSON.stringify(payload)
       });
 
-      const result: { success?: boolean; error?: string } = await response
-        .json()
-        .catch(() => ({}));
-
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || "Failed to send message. Try again!");
+      if (response.ok) {
+        toast.success("Message sent successfully!", {
+          description: "We'll get back to you within 24 hours.",
+        });
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        toast.error("Failed to send message. Try again!");
       }
-
-      toast.success("Message sent successfully!", {
-        description: "We'll get back to you within 24 hours.",
-      });
-      setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Network error. Try again!";
-      toast.error(message);
+      toast.error("Network error. Try again!");
     } finally {
       setSubmitting(false);
     }

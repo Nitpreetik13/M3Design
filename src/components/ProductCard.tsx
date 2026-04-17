@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -7,13 +8,49 @@ interface ProductCardProps {
   description: string;
   price?: string;
   inStock?: boolean;
+  category?: string;
 }
 
-const ProductCard = ({ name, image, description, price, inStock = true }: ProductCardProps) => {
-  const handleRequestQuote = () => {
-    toast.success(`Quote request sent for ${name}!`, {
-      description: "We'll get back to you shortly with pricing details.",
-    });
+const SHEETDB_CONTACT_API = "https://sheetdb.io/api/v1/gj3kq5u7gf1ck";
+
+const ProductCard = ({ name, image, description, price, inStock = true, category }: ProductCardProps) => {
+  const [sendingQuote, setSendingQuote] = useState(false);
+
+  const handleRequestQuote = async () => {
+    setSendingQuote(true);
+
+    const payload = {
+      data: [
+        {
+          name: "Website Product Inquiry",
+          email: "quote-request@website.local",
+          phone: "N/A",
+          message: `Quote requested for product: ${name} | Category: ${category || "N/A"} | In stock: ${inStock ? "Yes" : "No"}`,
+        },
+      ],
+    };
+
+    try {
+      const response = await fetch(SHEETDB_CONTACT_API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send quote request");
+      }
+
+      toast.success(`Quote request sent for ${name}!`, {
+        description: "Your team can now track this product inquiry in the contact sheet.",
+      });
+    } catch {
+      toast.error("Failed to send quote request. Try again.");
+    } finally {
+      setSendingQuote(false);
+    }
   };
 
   return (
@@ -41,10 +78,10 @@ const ProductCard = ({ name, image, description, price, inStock = true }: Produc
         )}
         <Button
           onClick={handleRequestQuote}
-          disabled={!inStock}
+          disabled={sendingQuote}
           className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50"
         >
-          Request Quote
+          {sendingQuote ? "Sending..." : "Request Quote"}
         </Button>
       </div>
     </div>

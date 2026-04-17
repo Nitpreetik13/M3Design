@@ -13,6 +13,16 @@ export interface Product {
 // Your SheetDB URL should look like: https://sheetdb.io/api/v1/YOUR_API_ID
 const SHEET_API_URL = "https://sheetdb.io/api/v1/nls9a6jqmvg5j";
 
+const parseInStock = (value: unknown): boolean => {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "number") return value !== 0;
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+    return normalized === "true" || normalized === "1" || normalized === "yes";
+  }
+  return false;
+};
+
 const useProducts = (category?: string) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -40,7 +50,7 @@ const useProducts = (category?: string) => {
           image: typeof item.image === "string" ? item.image : "",
           description: typeof item.description === "string" ? item.description : "",
           category: typeof item.category === "string" ? item.category : "",
-          inStock: item.in_stock === "true" || item.in_stock === true,
+          inStock: parseInStock(item.in_stock),
         }));
         
         // Filter by category if provided

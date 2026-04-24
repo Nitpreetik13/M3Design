@@ -34,3 +34,37 @@ Replace these files with your real photos:
 - `src/assets/category-wallpapers.jpg`
 - `src/assets/hero-eco-packaging.jpg`
 - `src/assets/about-team.jpg`
+
+## Admin Panel Setup (`/admin`)
+
+This project now includes a basic admin route:
+- `/admin` -> login with passcode
+- add product form
+- Cloudinary upload button for local image upload
+- saves product rows directly to your products SheetDB
+
+### Vercel env vars required
+
+- `VITE_ADMIN_PASSCODE` = your admin login passcode (example: `m3-uncle-admin-2026`)
+- `VITE_CLOUDINARY_CLOUD_NAME` = your Cloudinary cloud name
+- `VITE_CLOUDINARY_UPLOAD_PRESET` = unsigned upload preset name
+
+### Cloudinary quick setup
+
+1. Create account at Cloudinary.
+2. Go to Settings -> Upload -> Upload presets.
+3. Create preset:
+- Signing Mode: `Unsigned`
+- Folder: `m3-products`
+- Allowed formats: `jpg,png,webp,jpeg`
+4. Copy:
+- `Cloud name`
+- `Upload preset name`
+5. Add both in Vercel env vars and redeploy.
+
+### Security note
+
+Client-side admin passcode is simple and low-cost, but not highly secure.
+For stronger security later:
+- protect `/admin` behind real auth (Supabase/Auth0/Clerk), or
+- move admin write APIs to server-side endpoints.

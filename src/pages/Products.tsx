@@ -6,7 +6,7 @@ import bagasseImg from "@/assets/category-bagasse.jpg";
 import plasticImg from "@/assets/category-plastic.jpg";
 import woodenImg from "@/assets/category-wooden.jpg";
 import paperImg from "@/assets/category-paper.jpg";
-import signageImg from "@/assets/category-signage.jpg";
+import signageImg from "@/assets/category-signage.png";
 import posterImg from "@/assets/category-poster.jpg";
 import wallpapersImg from "@/assets/category-wallpapers.jpg";
 

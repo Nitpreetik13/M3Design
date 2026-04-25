@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import CategoryCard from "@/components/CategoryCard";
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-eco-packaging.jpg";
+import heroImage from "@/assets/hero-eco-packaging.png";
 import { Link } from "react-router-dom";
 
 // Import all category images properly (required for Vercel)
@@ -12,7 +12,7 @@ import bagasseImg from "@/assets/category-bagasse.jpg";
 import plasticImg from "@/assets/category-plastic.jpg";
 import woodenImg from "@/assets/category-wooden.jpg";
 import paperImg from "@/assets/category-paper.jpg";
-import signageImg from "@/assets/category-signage.jpg";
+import signageImg from "@/assets/category-signage.png";
 import posterImg from "@/assets/category-poster.jpg";
 import wallpapersImg from "@/assets/category-wallpapers.jpg";
 

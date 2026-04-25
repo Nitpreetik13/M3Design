@@ -9,7 +9,7 @@ import bagasseImage from "@/assets/bagasse-products.jpg";
 import plasticImage from "@/assets/category-plastic.jpg";
 import woodenImage from "@/assets/category-wooden.jpg";
 import paperImage from "@/assets/category-paper.jpg";
-import signageImage from "@/assets/category-signage.jpg";
+import signageImage from "@/assets/category-signage.png";
 import posterImage from "@/assets/category-poster.jpg";
 import wallpapersImage from "@/assets/category-wallpapers.jpg";
 
